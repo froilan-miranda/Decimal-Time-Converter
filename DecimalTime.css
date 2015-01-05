@@ -1,0 +1,13 @@
+body {
+    margin: 0;
+}
+#decimal_time{
+	width: 450px;
+	height: 100px;
+	background-color: #ddd;
+}
+#decimal_output{
+	width: 80px;
+	height: 25px;
+	background-color: #ccc;
+}

@@ -1,0 +1,94 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<style type="text/css">
+		@import "DecimalTime.css";
+	</style>
+</head>
+	<body class="widget">
+		<!-- <img alt="Decimal Time" src="Default_2x.png" />
+		<span class="helloText">Hello, World!</span> -->
+			<div id="decimal_time">
+				<form action="#" id="convertion_form">
+					<label for="hours">Hours:</label>
+					<input id="hours" type="text" name="hours" />
+					<label for="minutes">Minutes:</label>
+					<input id="minutes" type="text" name="minutes" />
+					<input type="submit" value="Submit" />
+				</form>
+				<div id="decimal_output">pre output</div>
+				<button id="bttn_copy" name="bttn_copy">Copy to clipboard</button>
+			</div>
+		<!-- <script type='text/javascript' src='DecimalTime.js'></script> -->
+		<script type="text/javascript">
+console.log("Decimal Time Conversion ver.1.1");
+var inputMin=0;
+var inputHour=0;
+var totMin;
+var hoursDecimal;
+var converionForm = document.getElementById("convertion_form");
+var decimalOutput = document.getElementById("decimal_output");
+var btnCopy = document.getElementById("bttn_copy");
+
+//add submit event on form
+converionForm.onsubmit=function(evt){
+	console.log("submiting...");
+	evt.preventDefault();
+	initConversion();
+};
+
+btnCopy.onclick=function(){
+	console.log("copy button activated");
+	console.log("clipboard data: "+decimalOutput.innerHTML);
+	copyToPasteboard();
+};
+
+function copyToPasteboard() {
+	if(window.widget){
+		widget.system("/bin/echo -n 'snoopy' | /usr/bin/pbcopy", null);
+		decimalOutput.innerHTML = 'copied';
+	}else{
+		decimalOutput.innerHTML = 'no copy';
+	}
+}
+
+function initConversion(){
+	console.log("Initiating Conversion");
+	getInputData();
+}
+function getInputData(){
+	inputMin = parseInt(converionForm.minutes.value);
+	inputHour = parseInt(converionForm.hours.value);
+	console.log("user input: "+inputHour+":"+inputMin);
+	setTotMin();
+}
+function setTotMin(){
+	totMin = hrsToMins(inputHour) + inputMin;
+	console.log("Total minutes: "+totMin);
+	setHoursDecimal(totMin);
+}
+function setHoursDecimal(mins){
+	hoursDecimal = minsToDec(mins);
+	console.log("Hours Decimal: "+hoursDecimal);
+	updateOutput(hoursDecimal.toFixed(2));
+}
+function updateOutput(outValue){
+	console.log("i am in the output");
+	decimalOutput.innerHTML = outValue;
+}
+
+
+function hrsToMins(hrs){
+	//convert input hours to minutes and add to input minutes
+	return hrs*60;
+}
+function minsToDec(mins){
+	//convert total minutes to hours(decimal)
+	return mins/60;
+}
+
+console.log("js loaded");
+		</script>
+	</body>
+</html>
